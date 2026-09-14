@@ -1,0 +1,95 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Debtorslist1.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="900" d:DesignHeight="500"
+             x:Class="Debtorslist1.Views.HistoryView"
+             x:DataType="vm:HistoryViewModel">
+
+    <Grid ColumnDefinitions="300,*" Margin="15">
+
+        <!-- ЛЕВАЯ КОЛОНКА -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,*,Auto">
+            <TextBlock Grid.Row="0" Text="Должники" FontSize="16" Margin="0,0,0,10"/>
+
+            <ListBox Grid.Row="1"
+                     ItemsSource="{Binding Debtors}"
+                     SelectedItem="{Binding SelectedDebtor}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FullName}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Grid.Row="2"
+                    Content="Обновить список"
+                    Command="{Binding RefreshCommand}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Margin="0,10,0,0"/>
+        </Grid>
+
+        <!-- ПРАВАЯ КОЛОНКА -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto" Margin="20,0,0,0">
+
+            <TextBlock Grid.Row="0"
+                       Text="История изменений"
+                       FontSize="16"
+                       Margin="0,0,0,10"/>
+
+           <Border Grid.Row="1"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="4">
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Шапка -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="200,*"
+              Background="#EEE"
+              Margin="0,0,0,0">
+            <TextBlock Grid.Column="0"
+                       Text="Дата и время"
+                       FontWeight="Bold"
+                       Margin="8,6"/>
+            <TextBlock Grid.Column="1"
+                       Text="Сумма долга (руб.)"
+                       FontWeight="Bold"
+                       Margin="8,6"/>
+        </Grid>
+
+        <!-- Список записей -->
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding History}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="200,*">
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding ChangeDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                       Margin="8,4"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding Amount, StringFormat='{}{0:N2}'}"
+                                       Margin="8,4"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Border>
+
+            <StackPanel Grid.Row="2" Spacing="8" Margin="0,10,0,0">
+                <Button Content="Очистить всю историю"
+                        Command="{Binding ClearHistoryCommand}"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"/>
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="Green"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

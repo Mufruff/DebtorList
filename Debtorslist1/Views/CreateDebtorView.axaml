@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Debtorslist1.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="900" d:DesignHeight="500"
+             x:Class="Debtorslist1.Views.CreateDebtorView"
+             x:DataType="vm:CreateDebtorViewModel">
+
+    <ScrollViewer>
+        <StackPanel Margin="30" Spacing="12" MaxWidth="500" HorizontalAlignment="Left">
+
+            <TextBlock Text="Создание нового должника"
+                       FontSize="22"
+                       Margin="0,0,0,10"/>
+
+            <TextBlock Text="ФИО"/>
+            <TextBox Text="{Binding FullName}"
+                     PlaceholderText="Иванов Иван Иванович"/>
+
+            <TextBlock Text="Сумма долга (руб.)"/>
+            <TextBox Text="{Binding CurrentDebtText}"
+                     PlaceholderText="10000"/>
+
+            <TextBlock Text="Процентная ставка (% в месяц)"/>
+            <TextBox Text="{Binding InterestRateText}"
+                     PlaceholderText="5"/>
+
+            <TextBlock Text="Дата выдачи"/>
+            <DatePicker SelectedDate="{Binding DateIssued}"/>
+
+            <TextBlock Text="Срок возврата"/>
+            <DatePicker SelectedDate="{Binding DueDate}"/>
+
+            <TextBlock Text="Заметки"/>
+            <TextBox Text="{Binding Notes}"
+                     AcceptsReturn="True"
+                     Height="80"
+                     TextWrapping="Wrap"
+                     PlaceholderText="Необязательно"/>
+
+            <Button Content="Сохранить"
+                    Command="{Binding SaveCommand}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Margin="0,15,0,0"/>
+
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="Green"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
